@@ -2,11 +2,24 @@
 
 import Data.Char
 
+--funktionen
 summe :: Integer -> Integer
 summe 0 = 0
 summe x
     | x < 0 = error "x muss größer gleich 0 sein"
     | otherwise = x + summe (x-1)
+
+equals :: Integer -> Integer -> Bool
+equals a b
+    | a == b = True
+    | otherwise = False
+
+bigger :: Integer -> Integer -> Integer
+bigger a b
+    | a > b = a
+    | otherwise = b
+
+--rekursion
 
 fakultaet :: Integer -> Integer
 fakultaet 0 = 0
@@ -55,8 +68,7 @@ division a
 
 
 
-
-
+--demo lists
 ten :: [Int]
 ten = [1..10]
 
@@ -67,14 +79,14 @@ sumCube :: Int
 sumCube = sum cube
 
 -- >>> cube [12]
-
+--lists
 rangeList :: Int -> Int -> [Int]
 rangeList a b = [a..b]
 
--- >>> rangeList 1 10
 
 palindromList :: Eq a => [a] -> Bool
 palindromList x = reverse x == x
+
 
 dupli :: [Int] -> [Int]
 dupli [] = []
@@ -86,36 +98,39 @@ firstWord (x:xs)
     | x == ' ' = []
     | otherwise = x : firstWord xs
 
-
+--map filter
 toUpperString :: String -> String
 toUpperString [] = []
 toUpperString (x:xs) = toUpper x : toUpperString xs
 
--- >>> toUpperString "hallo"
--- "HALLO"
 toLowerString :: String -> String
 toLowerString [] = []
 toLowerString (x:xs) = toLower x : toLowerString xs
 
--- >>> toLowerString "HALLO"
--- "hallo"
 
--- >>> firstWord "Hallo Welt"
--- "Hallo"
+isLowerCase :: Char -> Bool
+isLowerCase c = isLower c
+stringToLowerCaseBools :: String -> [Bool]
+stringToLowerCaseBools str = map isLowerCase str
 
--- >>> dupli [1,2,3]
--- [1,1,2,2,3,3]
-
--- >>> palindromList [1,2,3,2,1]
--- True
-
--- >>> rangeList 1 10
--- [1,2,3,4,5,6,7,8,9,10]
+allLowerCase :: String -> Bool
+allLowerCase str = and (stringToLowerCaseBools str)
 
 
+minList :: [Int] -> [Int] -> [Int]
+minList xs ys = zipWith min xs ys
 
-checkUpper :: string -> [Bool]
-checkUpper x = []
 
--- >>> checkUpper "Hallo"
--- []
+-- reduction
+
+productList :: [Int] -> Int
+productList = foldl (*) 1
+
+productEvenList :: [Int] -> Int
+productEvenList = foldl (*) 1 . filter even
+
+maxList :: [Int] -> Int
+maxList = foldl1 max
+
+anyTrue :: [Bool] -> Bool
+anyTrue = foldl (\acc x -> acc || x) False
